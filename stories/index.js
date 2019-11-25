@@ -8,6 +8,7 @@ import "index.scss";
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
+import InterViewerListItem from "components/InterviewerListItem"
 
 storiesOf("Button", module)
   .addParameters({
@@ -67,4 +68,37 @@ storiesOf("DayList", module)
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   ));
 
+  const interviewer = {
+    id: 1,
+    name: "Sylvia Palmer",
+    avatar: "https://i.imgur.com/LpaY82x.png"
+  };
+  
+  storiesOf("InterviewerListItem", module)
+    .addParameters({
+      backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+    })
+    .add("Unselected", () => (
+      <InterViewerListItem
+        id={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+      />
+    ))
+    .add("Selected", () => (
+      <InterViewerListItem
+        id={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        selected
+      />
+    ))
+    .add("Clickable", () => (
+      <InterViewerListItem
+        id={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        setInterviewer={action("setInterviewer")}
+      />
+    ));
 
