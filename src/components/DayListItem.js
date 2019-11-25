@@ -17,10 +17,12 @@ export default function(props) {
     }
   }
 
-  const dayClass  = cs("day-list__item",{
-    "day-list__item--selected": props.selected,
-    'day-list__item--full': props.spots=== 0
-  });
+  const dayClass  = cs("day-list__item",
+    {
+      "day-list__item--selected": props.selected,
+      'day-list__item--full': props.spots=== 0
+    }
+  );
 
   return (
     <li className = {dayClass} onClick={() => {
