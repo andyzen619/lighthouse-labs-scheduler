@@ -1,0 +1,2 @@
+[2019-11-23 21:34:27.726] [renderer1] [warning] UNRESPONSIVE extension host, 'Zignd.html-css-class-completion' took 99% of 803.267ms, saved PROFILE here: '/tmp/exthost-95a9fb.cpuprofile' [{"id":"gc","total":4040,"percentage":1},{"id":"program","total":3154,"percentage":0},{"id":"self","total":937,"percentage":0},{"id":"Zignd.html-css-class-completion","total":794865,"percentage":99}]
+[2019-11-23 21:35:29.443] [renderer1] [warning] {}

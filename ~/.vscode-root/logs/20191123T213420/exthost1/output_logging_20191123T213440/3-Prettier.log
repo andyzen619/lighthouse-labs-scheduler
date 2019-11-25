@@ -1,0 +1,64 @@
+[INFO - 9:34:40 p.m.] Extension Name: "prettier-vscode".
+[INFO - 9:34:40 p.m.] Extension Version: "3.9.0".
+[INFO - 9:34:40 p.m.] Enabling prettier for languages:
+[
+  "javascript",
+  "mongo",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "json",
+  "jsonc",
+  "json5",
+  "css",
+  "postcss",
+  "less",
+  "scss",
+  "graphql",
+  "markdown",
+  "mdx",
+  "html",
+  "vue",
+  "yaml"
+]
+[INFO - 9:34:40 p.m.] Enabling prettier for range supported languages:
+[
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "json",
+  "graphql"
+]
+[INFO - 9:36:29 p.m.] Formatting /home/aliang/lighthouse/w7/scheduler/src/components/Application.js.
+[INFO - 9:36:29 p.m.] Using bundled version of prettier.
+[INFO - 9:36:29 p.m.] Resolved ignore file to /home/aliang/lighthouse/w7/.prettierignore.
+[INFO - 9:36:29 p.m.] File Info:
+{
+  "ignored": false,
+  "inferredParser": "babel"
+}
+[INFO - 9:36:29 p.m.] No local configuration detected, using VS Code configuration.
+[INFO - 9:36:29 p.m.] Prettier Options:
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "auto",
+  "htmlWhitespaceSensitivity": "css",
+  "insertPragma": false,
+  "jsxBracketSameLine": false,
+  "jsxSingleQuote": false,
+  "printWidth": 80,
+  "proseWrap": "preserve",
+  "quoteProps": "as-needed",
+  "requirePragma": false,
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "useTabs": false,
+  "vueIndentScriptAndStyle": false,
+  "filepath": "/home/aliang/lighthouse/w7/scheduler/src/components/Application.js",
+  "parser": "babel"
+}
+[INFO - 9:36:29 p.m.] Formatting completed in 51.777101ms.
