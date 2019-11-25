@@ -15,13 +15,11 @@ export default function(props) {
     else{
       return `${spots} spots remaining`;
     }
-
-
   }
 
-  const dayClass  = cs('day-list__item',{
-    'day-list__item--selected': props.selected,
-    'day-list__item--full': props.spot === 0
+  const dayClass  = cs("day-list__item",{
+    "day-list__item--selected": props.selected,
+    'day-list__item--full': props.spots=== 0
   });
 
   return (
