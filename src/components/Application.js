@@ -1,28 +1,33 @@
 import React, { useState } from "react";
 
 import "components/Application.scss";
-import DayList from "components/DayList";
 
-const days = [{
+import DayList from "components/DayList";
+import Appointment from "components/Appointment"
+
+
+const days = [
+  {
     id: 1,
     name: "Monday",
-    spots: 2,
+    spots: 2
   },
   {
     id: 2,
     name: "Tuesday",
-    spots: 5,
+    spots: 5
   },
   {
     id: 3,
     name: "Wednesday",
-    spots: 0,
-  },
+    spots: 0
+  }
 ];
 
-const appointments = [{
+const appointments = [
+  {
     id: 1,
-    time: "12pm",
+    time: "12pm"
   },
   {
     id: 2,
@@ -32,7 +37,7 @@ const appointments = [{
       interviewer: {
         id: 1,
         name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
+        avatar: "https://i.imgur.com/LpaY82x.png"
       }
     }
   },
@@ -44,7 +49,8 @@ const appointments = [{
       interviewer: {
         id: 2,
         name: "Jackson Hayes",
-        avatar: "https://s3media.247sports.com/Uploads/Assets/721/173/9173721.jpg",
+        avatar:
+          "https://s3media.247sports.com/Uploads/Assets/721/173/9173721.jpg"
       }
     }
   },
@@ -56,49 +62,57 @@ const appointments = [{
       interviewer: {
         id: 3,
         name: "Coach POP",
-        avatar: "https://s.yimg.com/ny/api/res/1.2/XmGyHIs3CYaE.ntojBDWTA--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/http://media.zenfs.com/en-GB/homerun/omnisport.uk/1db87d8b96528fc07de24ea5412bc64e",
+        avatar:
+          "https://s.yimg.com/ny/api/res/1.2/XmGyHIs3CYaE.ntojBDWTA--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/http://media.zenfs.com/en-GB/homerun/omnisport.uk/1db87d8b96528fc07de24ea5412bc64e"
       }
     }
   },
   {
-    id: 5,
-    time: "10am",
+    id: "last",
+    time: "10am"
   }
 ];
 
 export default function Application(props) {
-
   const [day, setDay] = useState("Monday");
 
-  return ( <
-    main className = "layout" >
-    <
-    section className = "sidebar" > { " " } { /* Replace this with the sidebar elements during the "Environment Setup" activity. */ } <
-    img className = "sidebar--centered"
-    src = "images/logo.png"
-    alt = "Interview Scheduler" /
-    >
-    <
-    hr className = "sidebar__separator sidebar--centered" / >
-    <
-    nav className = "sidebar__menu" >
-    <
-    DayList days = { days }
-    day = { day }
-    setDay = {
-      (day) => { setDay(day) } }
-    /> <
-    /nav> <
-    img className = "sidebar__lhl sidebar--centered"
-    src = "images/lhl.png"
-    alt = "Lighthouse Labs" /
-    >
-    <
-    /section>{" "} <
-    section className = "schedule" > { " " } { /* Replace this with the schedule elements durint the "The Scheduler" activity. */ } { " " } <
-    /section>{" "}
+  return (
+    <main className="layout">
+      <section className="sidebar">
+        {" "}
+        {/* Replace this with the sidebar elements during the "Environment Setup" activity. */}{" "}
+        <img
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
+        />
+        <hr className="sidebar__separator sidebar--centered" />
+        <nav className="sidebar__menu">
+          <DayList
+            days={days}
+            day={day}
+            setDay={day => {
+              setDay(day);
+            }}
+          />{" "}
+        </nav>{" "}
+        <img
+          className="sidebar__lhl sidebar--centered"
+          src="images/lhl.png"
+          alt="Lighthouse Labs"
+        />
+      </section>{" "}
+      <section className="schedule">
+        {" "}
+        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}{" "}
 
-    <
-    /main>
+        {appointments.map((appointment) => 
+        <Appointment
+        key={appointment.id}
+        {...appointment}
+        >
+        </Appointment>)}
+      </section>{" "}
+    </main>
   );
 }
