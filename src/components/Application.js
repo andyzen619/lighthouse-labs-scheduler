@@ -3,79 +3,72 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 
 import DayList from "components/DayList";
-import Appointment from "components/Appointment"
+import Appointment from "components/Appointment";
+
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 const Ax = require("axios");
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm"
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png"
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "3pm",
-    interview: {
-      student: "Andy Liang",
-      interviewer: {
-        id: 2,
-        name: "Jackson Hayes",
-        avatar:
-          "https://s3media.247sports.com/Uploads/Assets/721/173/9173721.jpg"
-      }
-    }
-  },
-  {
-    id: 4,
-    time: "6pm",
-    interview: {
-      student: "Alred Payton",
-      interviewer: {
-        id: 3,
-        name: "Coach POP",
-        avatar:
-          "https://s.yimg.com/ny/api/res/1.2/XmGyHIs3CYaE.ntojBDWTA--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/http://media.zenfs.com/en-GB/homerun/omnisport.uk/1db87d8b96528fc07de24ea5412bc64e"
-      }
-    }
-  },
-  {
-    id: "last",
-    time: "10am"
-  }
-];
-
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {},
+    interviewers: {}
+  });
 
-  useEffect(()=>{
-    Ax.get('/api/days')
-    .then(
-      res=>{
-        debugger
-        setDays(res.data);
+  /**
+   * Sets the day property of state to day.
+   * @param {*} day
+   */
+  const setDay = day => setState({ ...state, day });
+
+  const appointments = getAppointmentsForDay(state, state.day);
+
+  const schedule = appointments.map(appointment => {
+    let interview = getInterview(state, appointment.interview);
+    console.log(interview);
+
+      if(interview){
+        return (
+          <Appointment
+            key={appointment.id}
+            id={appointment.id}
+            time={appointment.time}
+            interview={interview.interviewer}
+            student={interview.student}
+          />
+        );
       }
-    )
-    .catch(err=> {console.log(err)})
-  },[])
+      else{
+        return (
+          <Appointment
+            key={appointment.id}
+            id={appointment.id}
+            time={appointment.time}
+            interview={null}
+          />
+        );
+      }
+  });
+
+  useEffect(() => {
+    let days = Ax.get("/api/days");
+    let appointments = Ax.get("/api/appointments");
+    let interviewers = Ax.get("/api/interviewers");
+
+    Promise.all([days, appointments, interviewers]).then(res => {
+      days = res[0].data;
+      appointments = res[1].data;
+      interviewers = res[2].data;
+
+      setState(prev => ({ ...prev, days, appointments, interviewers }));
+    });
+  }, []);
 
   return (
     <main className="layout">
       <section className="sidebar">
-        {" "}
-        {/* Replace this with the sidebar elements during the "Environment Setup" activity. */}{" "}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -84,10 +77,10 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            day={day}
+            days={state.days}
+            day={state.day}
             setDay={day => {
-              setDay(day);
+              setState(day);
             }}
           />{" "}
         </nav>{" "}
@@ -97,17 +90,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>{" "}
-      <section className="schedule">
-        {" "}
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}{" "}
-
-        {appointments.map((appointment) => 
-        <Appointment
-        key={appointment.id}
-        {...appointment}
-        >
-        </Appointment>)}
-      </section>{" "}
+      <section className="schedule"> {schedule}</section>{" "}
     </main>
   );
 }
