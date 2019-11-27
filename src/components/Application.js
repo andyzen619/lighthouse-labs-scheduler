@@ -27,8 +27,6 @@ export default function Application(props) {
 
   const schedule = appointments.map(appointment => {
     let interview = getInterview(state, appointment.interview);
-    console.log(interview);
-
       if(interview){
         return (
           <Appointment
@@ -80,7 +78,7 @@ export default function Application(props) {
             days={state.days}
             day={state.day}
             setDay={day => {
-              setState(day);
+              setDay(day);
             }}
           />{" "}
         </nav>{" "}
