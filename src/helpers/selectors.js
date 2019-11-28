@@ -1,3 +1,10 @@
+// import { stat } from "fs";
+
+/**
+ * Returns appointments for day
+ * @param {*} state 
+ * @param {*} day 
+ */
 export function getAppointmentsForDay(state, day) {
 
   if(!state.days){
@@ -16,6 +23,11 @@ export function getAppointmentsForDay(state, day) {
   return result;
 }
 
+/**
+ * Returns interviews correspoind to interview id
+ * @param {*} state 
+ * @param {*} interview 
+ */
 export function getInterview(state, interview) {
   let interviewersObj = state.interviewers;
   let result = {};
@@ -31,5 +43,41 @@ export function getInterview(state, interview) {
       result["student"] = interview.student;
     }
   }
+  return result;
+}
+
+/**
+ * Returns an array of interviewer object of day
+ * @param {*} state 
+ * @param {*} day 
+ */
+export function getInterviewersForDay(state, day){
+  let result = [];
+  let days = state.days;
+  let interviewersForStateDay;
+
+  //Checks validity of state.days
+  if(state.days.length < 1){
+    return [];
+  }
+
+  //Retrieves interviewers for day
+  for(const stateDay of days){
+    if(stateDay.name === day){
+      interviewersForStateDay = stateDay.interviewers;
+    }
+  }
+
+  //if no day is found, return empty []
+  if(!interviewersForStateDay){
+    return [];
+  }
+
+  //Push interviewer objects to results;
+  for(const id of interviewersForStateDay){
+    let interviewer = state.interviewers[id];
+    result.push(interviewer);
+  }
+
   return result;
 }
