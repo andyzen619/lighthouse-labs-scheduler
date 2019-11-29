@@ -3,22 +3,22 @@ import cs from "classnames";
 
 import "components/InterviewerListItem.scss"
 
-export default function(props) {
+export default function({name, avatar, selected, setInterviewer}=this.props) {
 
   const interviewerClass = cs(
     "interviewers__item",{
-    "interviewers__item--selected": props.selected
+    "interviewers__item--selected": selected
     }
   );
 
   return (
-    <li className={interviewerClass} onClick={props.setInterviewer}>
+    <li className={interviewerClass} onClick={setInterviewer}>
       <img
         className={"interviewers__item-image"}
-        src={props.avatar}  
-        alt={props.name}
+        src={avatar}  
+        alt={name}
       />
-      {props.selected && props.name}
+      {selected && name}
     </li>
   ); 
 }   

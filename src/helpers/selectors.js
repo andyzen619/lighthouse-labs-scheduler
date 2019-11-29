@@ -1,4 +1,4 @@
-// import { stat } from "fs";
+import { stat } from "fs";
 
 /**
  * Returns appointments for day
