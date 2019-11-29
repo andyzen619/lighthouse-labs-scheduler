@@ -9,6 +9,7 @@ import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
 import useVisualMode from "hooks/useVisualMode";
 import Confirm from "components/Appointment/Confirm";
+import Error from "components/Appointment/Error";
 
 export default function({id,time, interview, student, interviewers, bookInterview, cancelInterview} = this.props) {
   const EMPTY = "EMPTY";
@@ -18,6 +19,8 @@ export default function({id,time, interview, student, interviewers, bookIntervie
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE"
+  const ERROR_DELETE = "ERROR_DELETE"
 
   //Object that controls the modes
   const { mode, transition, back } = useVisualMode(
@@ -34,9 +37,11 @@ export default function({id,time, interview, student, interviewers, bookIntervie
       student: name,
       interviewer: interviewer.id
     };
-    debugger
     transition(SAVING);
-    bookInterview(id, interview).then(()=>transition(SHOW));
+    bookInterview(id, interview)
+    .then(()=>transition(SHOW), error=>{
+      console.log("Saving error:", error); 
+      transition(ERROR_SAVE, true)})
   }
 
   /**
@@ -48,12 +53,17 @@ export default function({id,time, interview, student, interviewers, bookIntervie
     }
     else {
       transition(DELETING)
-      cancelInterview(id).then(()=>transition(EMPTY));
+      cancelInterview(id)
+      .then(()=>transition(EMPTY), error=>{console.log("Delete error:", error); transition(ERROR_DELETE, true)});
     }
   }
 
   const edit = () => {
     transition(EDIT);
+  }
+
+  const errorClose = () =>{
+    back();
   }
 
   return (
@@ -93,6 +103,18 @@ export default function({id,time, interview, student, interviewers, bookIntervie
       />
       }
 
+      {mode === ERROR_SAVE &&
+      <Error
+        message="Could not save appointment"
+        onClose={errorClose}
+      />
+      }
+      {mode === ERROR_DELETE &&
+      <Error
+      message="Could not delete appointment"
+      onClose={errorClose}
+      />
+      }
     </Fragment>
   );
 }
