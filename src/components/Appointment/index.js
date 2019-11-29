@@ -52,7 +52,9 @@ export default function(
       };
       transition(SAVING);
       bookInterview(id, interview).then(
-        () => transition(SHOW),
+        () => { 
+          transition(SHOW)
+        },
         error => {
           console.log("Saving error:", error);
           transition(ERROR_SAVE, true);

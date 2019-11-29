@@ -7,72 +7,18 @@ import Appointment from "components/Appointment";
 
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
-const Ax = require("axios");
+import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
-  /**
-   * Sets the day property of state to day.
-   * @param {*} day
-   */
-  const setDay = day => setState({ ...state, day });
-  
-  /**
-   * Books interview
-   * @param {*} id 
-   * @param {*} interview 
-   */
-  const bookInterview = (id, interview) => {
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    //Make put request to update state locally and on server
-    return Ax.put(`/api/appointments/${id}`, {interview})
-    .then(res=>{
-      console.log(res);
-      setState(
-        {...state, appointments}
-      );
-    })
-  }
-
-  /**
-   * Cancels interview for slot id
-   * @param {*} id 
-   */
-  const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-
-    return Ax.delete(`/api/appointments/${id}`)
-    .then(res=>{
-      console.log(res);
-      setState(
-        {...state, appointments}
-      );
-    });
-  } 
-
-  
+  debugger
   const appointments = getAppointmentsForDay(state, state.day);
 
   //Returns the schedule after looping through appointments
@@ -106,21 +52,6 @@ export default function Application(props) {
         );
       }
   });
-
-  useEffect(() => {
-    let days = Ax.get("/api/days");
-    let appointments = Ax.get("/api/appointments");
-    let interviewers = Ax.get("/api/interviewers");
-
-    Promise.all([days, appointments, interviewers]).then(res => {
-      days = res[0].data;
-      appointments = res[1].data;
-      interviewers = res[2].data;
-
-      setState(prev => ({ ...prev, days, appointments, interviewers }));
-    });
-  }, []);
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -133,7 +64,7 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={state.days}
-            day={state.day}
+            propDay={state.day}
             setDay={day => {
               setDay(day);
             }}
