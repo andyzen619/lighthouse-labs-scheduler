@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import { stat } from "fs";
 
 const Ax = require("axios");
 
@@ -6,7 +7,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "setDay":
       return { ...state, day: action.value };
-    case "update":
+    case "updateInterview":
       return { ...state, appointments: action.value };
     case "setData":
       return {
@@ -16,13 +17,15 @@ const reducer = (state, action) => {
         interviewers: action.value.interviewers
       };
     case "setSpots":
+
+      let newDaysArr = [...state.days];
+      newDaysArr[action.dayIndex].spots = action.value;
+
+      debugger
       return {
         //Code to update spots 
         ...state, 
-        days: [
-          ...state.days, 
-          {...state.days[action.id - 1], spots: action.value}
-        ]
+        days: newDaysArr
       }
     default:
       throw new Error(
@@ -51,6 +54,8 @@ const useApplictionData = () => {
    * @param {*} interview
    */
   const bookInterview = (id, interview) => {
+
+    //Used with 
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -59,11 +64,17 @@ const useApplictionData = () => {
       ...state.appointments,
       [id]: appointment
     };
+
     //Make put request to update state locally and on server
     return Ax.put(`/api/appointments/${id}`, { interview }).then(res => {
-      //Updates state with new appointment in days and appointment keys
-      dispatch({type: "setSpots", value: state.days.appointments + 1, id: id});
-      dispatch({ type: "update", value: appointments });  
+      
+      //Updates current day spots when apppoint has been successfully booked
+      let currentDay = state.days.find(day => day.name === state.day);
+
+      dispatch({type: "setSpots", value: currentDay.spots -1, dayIndex: currentDay.id - 1});
+
+      //Updates appointment with correct booked interview information
+      dispatch({ type: "updateInterview", value: appointments });  
     });
   };
 
@@ -72,6 +83,8 @@ const useApplictionData = () => {
    * @param {*} id
    */
   const cancelInterview = id => {
+
+    //Used for removing interview from appointment
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -81,9 +94,16 @@ const useApplictionData = () => {
       [id]: appointment
     };
 
+    // dispatch({type: "setSpots", value: state.days[id -1].spots + 1, id: });
     return Ax.delete(`/api/appointments/${id}`).then(res => {
-      console.log(res);
-      dispatch({ type: "update", value: appointments });
+
+      //Increases spots available for current day when an appointment is canceled.
+      let currentDay = state.days.find(day => day.name === state.day);
+
+      dispatch({type: "setSpots", value: currentDay.spots + 1, dayIndex: currentDay.id - 1});
+
+      // Removes interview from appointment when interview is canceled.
+      dispatch({ type: "updateInterview", value: appointments });
     });
   };
 

@@ -18,7 +18,6 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-  debugger
   const appointments = getAppointmentsForDay(state, state.day);
 
   //Returns the schedule after looping through appointments
