@@ -95,7 +95,7 @@ export default function(
 
       {/* Renders correct view based on mode */}
       {mode === EMPTY && <Empty onAdd={transition} />}
-      {mode === SHOW && (
+      {mode === SHOW && interview && (
         <Show
           student={student}
           interviewer={interview}

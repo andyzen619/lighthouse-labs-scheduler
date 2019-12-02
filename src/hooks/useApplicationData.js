@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect } from "react";
-import { stat } from "fs";
+import { useReducer, useEffect } from "react";
 
 const Ax = require("axios");
 
@@ -17,16 +16,14 @@ const reducer = (state, action) => {
         interviewers: action.value.interviewers
       };
     case "setSpots":
-
       let newDaysArr = [...state.days];
       newDaysArr[action.dayIndex].spots = action.value;
 
-      debugger
       return {
-        //Code to update spots 
-        ...state, 
+        //Code to update spots
+        ...state,
         days: newDaysArr
-      }
+      };
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -54,8 +51,7 @@ const useApplictionData = () => {
    * @param {*} interview
    */
   const bookInterview = (id, interview) => {
-
-    //Used with 
+    //Used with
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -67,14 +63,17 @@ const useApplictionData = () => {
 
     //Make put request to update state locally and on server
     return Ax.put(`/api/appointments/${id}`, { interview }).then(res => {
-      
       //Updates current day spots when apppoint has been successfully booked
       let currentDay = state.days.find(day => day.name === state.day);
 
-      dispatch({type: "setSpots", value: currentDay.spots -1, dayIndex: currentDay.id - 1});
+      dispatch({
+        type: "setSpots",
+        value: currentDay.spots - 1,
+        dayIndex: currentDay.id - 1
+      });
 
       //Updates appointment with correct booked interview information
-      dispatch({ type: "updateInterview", value: appointments });  
+      dispatch({ type: "updateInterview", value: appointments });
     });
   };
 
@@ -83,7 +82,6 @@ const useApplictionData = () => {
    * @param {*} id
    */
   const cancelInterview = id => {
-
     //Used for removing interview from appointment
     const appointment = {
       ...state.appointments[id],
@@ -96,11 +94,14 @@ const useApplictionData = () => {
 
     // dispatch({type: "setSpots", value: state.days[id -1].spots + 1, id: });
     return Ax.delete(`/api/appointments/${id}`).then(res => {
-
       //Increases spots available for current day when an appointment is canceled.
       let currentDay = state.days.find(day => day.name === state.day);
 
-      dispatch({type: "setSpots", value: currentDay.spots + 1, dayIndex: currentDay.id - 1});
+      dispatch({
+        type: "setSpots",
+        value: currentDay.spots + 1,
+        dayIndex: currentDay.id - 1
+      });
 
       // Removes interview from appointment when interview is canceled.
       dispatch({ type: "updateInterview", value: appointments });
@@ -121,6 +122,27 @@ const useApplictionData = () => {
         type: "setData",
         value: { days, appointments, interviewers }
       });
+
+      const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+      socket.onopen = () => {
+        console.log("Web socket opened");
+        socket.send("Ping...");
+      };
+      socket.onmessage = appointmentData => {
+        const appointment = JSON.parse(appointmentData.data);
+        console.log(appointment);
+
+        debugger;
+
+        const appointments = {
+          ...state.appointments,
+          [appointment.id]: appointment
+        };
+
+        if (appointment.type === "SET_INTERVIEW") {
+          dispatch({ type: "updateInterview", value: appointments });
+        }
+      };
     });
   }, []);
   return { state, setDay, bookInterview, cancelInterview };
