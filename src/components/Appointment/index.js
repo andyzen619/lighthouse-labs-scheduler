@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import "./index.scss";
 
@@ -88,6 +88,18 @@ export default function(
   const errorClose = () => {
     back();
   };
+
+  //Side effect that listens for changes in state
+  useEffect(() => {
+
+    debugger
+    if (interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+   }, [interview, transition, mode]);
 
   return (
     <Fragment>

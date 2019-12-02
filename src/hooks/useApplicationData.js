@@ -6,24 +6,61 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "setDay":
       return { ...state, day: action.value };
+
     case "updateInterview":
-      return { ...state, appointments: action.value };
+
+      let currentDay = state.days.find(day => day.appointments.includes(action.id));
+
+      if(action.interview){
+        currentDay.spots -= 1;
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: { ...action.interview }
+        };
+        
+        const appointments = {
+          ...state.appointments,
+          [ action.id]: appointment
+        };
+        let newDaysArr = [...state.days];
+        newDaysArr[currentDay.id -1] = currentDay;
+        return { ...state, appointments: appointments, days: newDaysArr };
+      }
+      else{
+        currentDay.spots += 1;
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: null
+        };
+        
+        const appointments = {
+          ...state.appointments,
+          [ action.id]: appointment
+        };
+
+        let newDaysArr = [...state.days];
+        newDaysArr[currentDay.id -1] = currentDay;
+
+        return { ...state, appointments: appointments, days: newDaysArr };
+      }
+
     case "setData":
       return {
         ...state,
         days: action.value.days,
         appointments: action.value.appointments,
         interviewers: action.value.interviewers
-      };
-    case "setSpots":
-      let newDaysArr = [...state.days];
-      newDaysArr[action.dayIndex].spots = action.value;
 
-      return {
-        //Code to update spots
-        ...state,
-        days: newDaysArr
       };
+    // case "setSpots":
+    //   let newDaysArr = [...state.days];
+    //   newDaysArr[action.dayIndex].spots = action.value;
+
+    //   return {
+    //     //Code to update spots
+    //     ...state,
+    //     days: newDaysArr
+    //   };
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -51,29 +88,9 @@ const useApplictionData = () => {
    * @param {*} interview
    */
   const bookInterview = (id, interview) => {
-    //Used with
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
+   
     //Make put request to update state locally and on server
     return Ax.put(`/api/appointments/${id}`, { interview }).then(res => {
-      //Updates current day spots when apppoint has been successfully booked
-      let currentDay = state.days.find(day => day.name === state.day);
-
-      dispatch({
-        type: "setSpots",
-        value: currentDay.spots - 1,
-        dayIndex: currentDay.id - 1
-      });
-
-      //Updates appointment with correct booked interview information
-      dispatch({ type: "updateInterview", value: appointments });
     });
   };
 
@@ -82,29 +99,8 @@ const useApplictionData = () => {
    * @param {*} id
    */
   const cancelInterview = id => {
-    //Used for removing interview from appointment
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
 
-    // dispatch({type: "setSpots", value: state.days[id -1].spots + 1, id: });
     return Ax.delete(`/api/appointments/${id}`).then(res => {
-      //Increases spots available for current day when an appointment is canceled.
-      let currentDay = state.days.find(day => day.name === state.day);
-
-      dispatch({
-        type: "setSpots",
-        value: currentDay.spots + 1,
-        dayIndex: currentDay.id - 1
-      });
-
-      // Removes interview from appointment when interview is canceled.
-      dispatch({ type: "updateInterview", value: appointments });
     });
   };
 
@@ -132,15 +128,17 @@ const useApplictionData = () => {
         const appointment = JSON.parse(appointmentData.data);
         console.log(appointment);
 
-        debugger;
-
-        const appointments = {
-          ...state.appointments,
-          [appointment.id]: appointment
-        };
-
         if (appointment.type === "SET_INTERVIEW") {
-          dispatch({ type: "updateInterview", value: appointments });
+
+          // let currentDay = state.days.find(day => day.name === state.day);
+          // dispatch({
+          //   type: "setSpots",
+          //   value: currentDay.spots + 1,
+          //   dayIndex: currentDay.id - 1
+          // });
+
+
+          dispatch({ type: "updateInterview", id: appointment.id, interview: appointment.interview});
         }
       };
     });
