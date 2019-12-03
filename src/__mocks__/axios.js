@@ -55,7 +55,7 @@ const fixtures = {
   }
 };
 
-  const defaults =  { URL: process.env.REACT_APP_WEBSOCKET_URL }
+  const defaults =  { url: "http://localhost:8000/"}
   const get = jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({

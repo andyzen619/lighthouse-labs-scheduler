@@ -102,7 +102,7 @@ export default function(
    }, [interview, transition, mode]);
 
   return (
-    <Fragment>
+    <article data-testid="appointment">
       <Header time={time}></Header>
 
       {/* Renders correct view based on mode */}
@@ -148,6 +148,6 @@ export default function(
       {mode === ERROR_DELETE && (
         <Error message="Could not delete appointment" onClose={errorClose} />
       )}
-    </Fragment>
+    </article>
   );
 }

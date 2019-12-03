@@ -35,6 +35,7 @@ export default function Application(props) {
             interviewers={interviewers}
             bookInterview={bookInterview}
             cancelInterview={cancelInterview}
+            data-testid="appointment"
           />
         );
       }
@@ -47,6 +48,7 @@ export default function Application(props) {
             interview={null}
             interviewers={interviewers}
             bookInterview={bookInterview}
+            data-testid="appointment"
           />
         );
       }
