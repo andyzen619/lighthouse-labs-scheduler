@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react";
 
-const Ax = require("axios");
+import axios from "axios";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -84,7 +84,7 @@ const useApplictionData = () => {
   const bookInterview = (id, interview) => {
    
     //Make put request to update state locally and on server
-    return Ax.put(`/api/appointments/${id}`, { interview }).then(res => {
+    return axios.put(`/api/appointments/${id}`, { interview }).then(res => {
     });
   };
 
@@ -94,14 +94,14 @@ const useApplictionData = () => {
    */
   const cancelInterview = id => {
 
-    return Ax.delete(`/api/appointments/${id}`).then(res => {
+    return axios.delete(`/api/appointments/${id}`).then(res => {
     });
   };
 
   useEffect(() => {
-    let days = Ax.get("/api/days");
-    let appointments = Ax.get("/api/appointments");
-    let interviewers = Ax.get("/api/interviewers");
+    let days = axios.get("/api/days");
+    let appointments = axios.get("/api/appointments");
+    let interviewers = axios.get("/api/interviewers");
 
     Promise.all([days, appointments, interviewers]).then(res => {
       days = res[0].data;
@@ -123,15 +123,7 @@ const useApplictionData = () => {
         console.log(appointment);
 
         if (appointment.type === "SET_INTERVIEW") {
-
-          // let currentDay = state.days.find(day => day.name === state.day);
-          // dispatch({
-          //   type: "setSpots",
-          //   value: currentDay.spots + 1,
-          //   dayIndex: currentDay.id - 1
-          // });
-
-
+          
           dispatch({ type: "updateInterview", id: appointment.id, interview: appointment.interview});
         }
       };

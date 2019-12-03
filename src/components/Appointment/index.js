@@ -43,7 +43,7 @@ export default function(
    * @param {*} interviewer
    */
   const save = (name, interviewer) => {
-    if (!interviewer) {
+    if (interviewer === 1000) {
       transition(ERROR_SAVE, true);
     } else {
       const interview = {

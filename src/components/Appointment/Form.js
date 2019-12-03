@@ -26,6 +26,7 @@ export default function(
       return;
     }
   
+    setError("");
     onSave(formName, formInterviewer);
   }
 
