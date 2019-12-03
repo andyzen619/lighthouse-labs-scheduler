@@ -9,7 +9,9 @@ const reducer = (state, action) => {
 
     case "updateInterview":
 
-      let currentDay = state.days.find(day => day.appointments.includes(action.id));
+      let currentDay = state.days.find(
+        day => day.appointments.includes(action.id)
+      );
 
       if(action.interview){
         currentDay.spots -= 1;
@@ -52,15 +54,7 @@ const reducer = (state, action) => {
         interviewers: action.value.interviewers
 
       };
-    // case "setSpots":
-    //   let newDaysArr = [...state.days];
-    //   newDaysArr[action.dayIndex].spots = action.value;
 
-    //   return {
-    //     //Code to update spots
-    //     ...state,
-    //     days: newDaysArr
-    //   };
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`

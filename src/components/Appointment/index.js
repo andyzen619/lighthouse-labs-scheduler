@@ -49,7 +49,7 @@ export default function(
       const interview = {
         student: name,
         interviewer: interviewer.id
-      };
+       };
       transition(SAVING);
       bookInterview(id, interview).then(
         () => { 
