@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { transform } from "@babel/core";
+import { useState } from "react";
 
 const useVisualMode = initial => {
   //Sets states

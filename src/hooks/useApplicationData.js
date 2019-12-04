@@ -2,65 +2,67 @@ import { useReducer, useEffect } from "react";
 
 import axios from "axios";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "setDay":
-      return { ...state, day: action.value };
+import reducer from "../reducers/application";
 
-    case "updateInterview":
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case "setDay":
+//       return { ...state, day: action.value };
 
-      let currentDay = state.days.find(
-        day => day.appointments.includes(action.id)
-      );
+//     case "updateInterview":
 
-      if(action.interview){
-        currentDay.spots -= 1;
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: { ...action.interview }
-        };
+//       let currentDay = state.days.find(
+//         day => day.appointments.includes(action.id)
+//       );
+
+//       if(action.interview){
+//         currentDay.spots -= 1;
+//         const appointment = {
+//           ...state.appointments[action.id],
+//           interview: { ...action.interview }
+//         };
         
-        const appointments = {
-          ...state.appointments,
-          [ action.id]: appointment
-        };
-        let newDaysArr = [...state.days];
-        newDaysArr[currentDay.id -1] = currentDay;
-        return { ...state, appointments: appointments, days: newDaysArr };
-      }
-      else{
-        currentDay.spots += 1;
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: null
-        };
+//         const appointments = {
+//           ...state.appointments,
+//           [ action.id]: appointment
+//         };
+//         let newDaysArr = [...state.days];
+//         newDaysArr[currentDay.id -1] = currentDay;
+//         return { ...state, appointments: appointments, days: newDaysArr };
+//       }
+//       else{
+//         currentDay.spots += 1;
+//         const appointment = {
+//           ...state.appointments[action.id],
+//           interview: null
+//         };
         
-        const appointments = {
-          ...state.appointments,
-          [ action.id]: appointment
-        };
+//         const appointments = {
+//           ...state.appointments,
+//           [ action.id]: appointment
+//         };
 
-        let newDaysArr = [...state.days];
-        newDaysArr[currentDay.id -1] = currentDay;
+//         let newDaysArr = [...state.days];
+//         newDaysArr[currentDay.id -1] = currentDay;
 
-        return { ...state, appointments: appointments, days: newDaysArr };
-      }
+//         return { ...state, appointments: appointments, days: newDaysArr };
+//       }
 
-    case "setData":
-      return {
-        ...state,
-        days: action.value.days,
-        appointments: action.value.appointments,
-        interviewers: action.value.interviewers
+//     case "setData":
+//       return {
+//         ...state,
+//         days: action.value.days,
+//         appointments: action.value.appointments,
+//         interviewers: action.value.interviewers
 
-      };
+//       };
 
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-};
+//     default:
+//       throw new Error(
+//         `Tried to reduce with unsupported action type: ${action.type}`
+//       );
+//   }
+// };
 
 const useApplictionData = () => {
   const [state, dispatch] = useReducer(reducer, {
