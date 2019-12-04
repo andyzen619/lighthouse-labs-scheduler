@@ -2,6 +2,7 @@ import React from "react";
 
 import "components/Button.scss";
 
+//Returns buttons view
 export default function Button(props) {
 
   let buttonClass = "button";  

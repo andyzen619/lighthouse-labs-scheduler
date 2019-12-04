@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * Returns the show view of appointment
+ * @param {} param0 
+ */
 export default function({student, interviewer, onEdit, onDelete}=this.props) {
   return (
     <main className="appointment__card appointment__card--show">

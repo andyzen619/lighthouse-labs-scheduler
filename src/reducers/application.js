@@ -14,6 +14,7 @@ const reducer = (state, action) => {
         day => day.appointments.includes(action.id)
       );
 
+      //Updates the spots information for that day and correct appointment information for a new interview and ready's for rendering
       if(action.interview){
         currentDay.spots -= 1;
         const appointment = {
@@ -29,6 +30,8 @@ const reducer = (state, action) => {
         newDaysArr[currentDay.id -1] = currentDay;
         return { ...state, appointments: appointments, days: newDaysArr };
       }
+
+      //Updates spots information for that day and correct appoointment information for a null interview and ready's for rendering
       else{
         currentDay.spots += 1;
         const appointment = {
@@ -47,6 +50,8 @@ const reducer = (state, action) => {
         return { ...state, appointments: appointments, days: newDaysArr };
       }
 
+
+    //Fills the data from server database and ready's for rendering
     case "setData":
       return {
         ...state,

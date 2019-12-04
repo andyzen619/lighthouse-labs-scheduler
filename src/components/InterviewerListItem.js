@@ -3,6 +3,10 @@ import cs from "classnames";
 
 import "components/InterviewerListItem.scss"
 
+/**
+ * Returns the interviewer item within interviewer list
+ * @param {} param0 
+ */
 export default function({name, avatar, selected, setInterviewer}=this.props) {
 
   const interviewerClass = cs(

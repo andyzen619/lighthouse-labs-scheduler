@@ -2,6 +2,9 @@ import React from "react";
 
 export default function({message}=this.props) {
 
+  /**
+   * Returns the status view of appointment
+   */
   return (
     <main className="appointment__card appointment__card--status">
       <img

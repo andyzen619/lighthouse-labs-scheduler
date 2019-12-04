@@ -11,6 +11,11 @@ import useVisualMode from "hooks/useVisualMode";
 import Confirm from "components/Appointment/Confirm";
 import Error from "components/Appointment/Error";
 
+
+/**
+ * Returns the entire appointment view
+ * @param {} param0 
+ */
 export default function(
   {
     id,
@@ -22,6 +27,8 @@ export default function(
     cancelInterview
   } = this.props
 ) {
+
+  //Lists all modes
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -38,7 +45,7 @@ export default function(
   );
 
   /**
-   * Creates interview object
+   * Saves a new interview object
    * @param {*} name
    * @param {*} interviewer
    */

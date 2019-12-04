@@ -9,6 +9,10 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 import useApplicationData from "hooks/useApplicationData";
 
+/**
+ * Renders entire application page
+ * @param {*} props 
+ */
 export default function Application(props) {
 
   const {

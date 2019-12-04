@@ -4,6 +4,10 @@ import "components/InterviewerList.scss"
 
 import InterviewerListItem from "components/InterviewerListItem";
 
+/**
+ * Returns the Interviewer List of a form
+ * @param {} param0 
+ */
 export default function({interviewers, value, onChange}=this.props){
   
   return (

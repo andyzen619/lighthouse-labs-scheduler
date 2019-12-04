@@ -3,6 +3,10 @@ import React, { useState, Fragment } from "react";
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
+/**
+ * Returns our Form view for editing/adding appointments
+ * @param {} param0 
+ */
 export default function(
   { name, interviewer, onCancel, onSave, interviewers } = this.props
 ) {
@@ -10,16 +14,25 @@ export default function(
   const [formInterviewer, setFormInterviewer] = useState(interviewer || null);
   const [error, setError] = useState("");
 
+  /**
+   * Resets From to empty values
+   */
   const reset = function() {
     setFormName("");
     setFormInterviewer(null);
   };
 
+  /**
+   * Resets form and cancels
+   */
   const cancel = function() {
     reset();
     onCancel();
   };
 
+  /**
+   * Checks for valid form entries
+   */
   function validate() {
     if (formName === "") {
       setError("Student name cannot be blank");

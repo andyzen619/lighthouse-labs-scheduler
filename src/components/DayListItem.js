@@ -3,6 +3,10 @@ import cs from "classnames";
 
 import "components/DayListItem.scss"
 
+/**
+ * Returns the DayList item for Day List
+ * @param {} props 
+ */
 export default function(props) {
 
   const formatSpots = function(spots){

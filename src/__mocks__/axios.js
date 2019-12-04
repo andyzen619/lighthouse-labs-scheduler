@@ -55,7 +55,13 @@ const fixtures = {
   }
 };
 
+
+//Defines our fake get, put, delete requestion from our fake axios. For testing purposes.
   const defaults =  { url: "http://localhost:8000/"}
+
+  /**
+   * Mock Axios. get, returns status
+   */
   const get = jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({
@@ -86,6 +92,10 @@ const fixtures = {
     }
   });
 
+
+  /**
+   * Axios.put, returns status code
+   */
   const put = jest.fn((url, interview) => {
     const appointment_position = url[url.length-1];
     const interview_appointment = interview.interview;
@@ -106,6 +116,8 @@ const fixtures = {
     get,
     put,
     delete: jest.fn(url => {
+
+      //Returns our mock delete request
       console.log("deleting");
       if (url === "/api/appointments/1" || url === "/api/appointments/2") {
         return Promise.resolve({

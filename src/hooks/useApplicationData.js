@@ -4,6 +4,9 @@ import axios from "axios";
 
 import reducer from "../reducers/application";
 
+/**
+ * Returns our state and book/cancel interview functions
+ */
 const useApplictionData = () => {
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
@@ -50,16 +53,21 @@ const useApplictionData = () => {
       appointments = res[1].data;
       interviewers = res[2].data;
 
+      //Sends set up data to reducer to render correct state of application
       dispatch({
         type: "setData",
         value: { days, appointments, interviewers }
       });
 
+
+      //Websocket set up
       const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
       socket.onopen = () => {
         console.log("Web socket opened");
         socket.send("Ping...");
       };
+
+      //On message from server, update state with interview
       socket.onmessage = appointmentData => {
         const appointment = JSON.parse(appointmentData.data);
         console.log(appointment);
