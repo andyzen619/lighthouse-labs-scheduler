@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, cleanup, waitForElement, getByText, getAllByTestId, queryByText, getByAltText, getByPlaceholderText, queryByAltText, mockRejectedValueOnce, queryAllByAltText } from "@testing-library/react";
+import { render, cleanup, waitForElement, getByText, getAllByTestId, queryByText, getByAltText, getByPlaceholderText, queryByAltText } from "@testing-library/react";
 
 import Application from "components/Application";
 import { fireEvent } from "@testing-library/react/dist";
