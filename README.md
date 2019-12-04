@@ -20,19 +20,19 @@ Allows the creation (or edition) of an appointment, by entering the name and sel
 
 Warns the user if name field was left empty. As well as provides error when appointment cannot be set.
 
-!["contextual error"](https://github.com/SebDufresne/scheduler/blob/master/docs/contextual-errors.png)
+!["contextual error"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/error.gif)
 
 ### Adaptive design
 
 Mobile ready platform.
 
-!["adaptive design"](https://github.com/SebDufresne/scheduler/blob/master/docs/adaptive-design.png)
+!["adaptive design"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/mobile.png)
 
 ### Transition states
 
 Saving and deleting animated transitions.
 
-!["state transitions"](https://github.com/SebDufresne/scheduler/blob/master/docs/transition-states.png)
+!["state transitions"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/transition.gif)
 
 ### Storybook Component Tests
 
@@ -50,7 +50,7 @@ Built-in [cypress](https://www.cypress.io/) end to end tests.
 
 Built-in [jest](https://jestjs.io/) test coverage.
 
-!["jest tests"](https://github.com/SebDufresne/scheduler/blob/master/docs/tests-jest.png)
+!["jest tests"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/jestTest.png)
 
 ## Dependencies
 
