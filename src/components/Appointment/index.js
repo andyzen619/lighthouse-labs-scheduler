@@ -43,7 +43,7 @@ export default function(
    * @param {*} interviewer
    */
   const save = (name, interviewer) => {
-    if (interviewer === 1000) {
+    if (!interviewer) {
       transition(ERROR_SAVE, true);
     } else {
       const interview = {
@@ -143,7 +143,7 @@ export default function(
       )}
 
       {mode === ERROR_SAVE && (
-        <Error message="Could not save appointment" onClose={errorClose} />
+        <Error message="You must selected an interviewer" onClose={errorClose} />
       )}
       {mode === ERROR_DELETE && (
         <Error message="Could not delete appointment" onClose={errorClose} />

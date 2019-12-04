@@ -79,14 +79,39 @@ const fixtures = {
       /* Resolve interviewers data */
 
       return Promise.resolve({
-        status:200,
+        status: 200,
         statusText:"OK",
         data: fixtures.interviewers
       })
     }
   });
 
+  const put = jest.fn((url, interview) => {
+    const appointment_position = url[url.length-1];
+    const interview_appointment = interview.interview;
+
+    fixtures.appointments[appointment_position].interview = interview_appointment;
+    console.log("Axios PUT succesfull");
+    return Promise.resolve(
+      {
+      state: 204,
+      statusText: "No Content",
+      }
+    )
+  });
+
+
   export default {
     defaults,
-    get
+    get,
+    put,
+    delete: jest.fn(url => {
+      console.log("deleting");
+      if (url === "/api/appointments/1" || url === "/api/appointments/2") {
+        return Promise.resolve({
+          status: 204,
+          statusText: "No Content"
+        });
+      }
+    })
   }
