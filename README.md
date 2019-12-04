@@ -8,13 +8,13 @@ React scheduler with up to five appointments per day. The information will be sy
 
 Landing page, with up to five appointments per day and dynamic counter for the remaining spots.
 
-!["opening page"](https://github.com/SebDufresne/scheduler/blob/master/docs/main-view.png)
+!["opening page"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/opening.png)
 
 ### Creating a new appointment
 
 Allows the creation (or edition) of an appointment, by entering the name and selecting the interviewer.
 
-!["create new appointment"](https://github.com/andyzen619/scheduler/Images/../../../../../Images/creating.gif)
+!["create new appointment"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/creating.gif)
 
 ### Contextual warnings and Error handling
 
