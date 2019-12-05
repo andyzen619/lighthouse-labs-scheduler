@@ -34,23 +34,29 @@ Saving and deleting animated transitions.
 
 !["state transitions"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/transition.gif)
 
+### Real time updates using websockets
+Modifying and adding appoints update in realtime without refresh.
+
+!["Real time updates"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/websocket.gif)
+
 ### Storybook Component Tests
 
 Built-in [storybook](https://storybook.js.org/) components tests.
 
-!["storybook tests"](https://github.com/SebDufresne/scheduler/blob/master/docs/mockup-storybook.png)
+!["storybook tests"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/storybook.png)
 
 ### Cypress E2E Tests
 
 Built-in [cypress](https://www.cypress.io/) end to end tests.
 
-!["cypress tests"](https://github.com/SebDufresne/scheduler/blob/master/docs/tests-cypress.png)
+!["cypress tests"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/cypress.png)
 
 ### Jest Unit Tests
 
 Built-in [jest](https://jestjs.io/) test coverage.
 
 !["jest tests"](https://github.com/andyzen619/lighthouse-labs-scheduler/blob/master/Images/jestTest.png)
+
 
 ## Dependencies
 
