@@ -5,8 +5,8 @@
  */
 const reducer = (state, action) => {
   switch (action.type) {
-    case "setDay":
-      return { ...state, day: action.value };
+    // case "setDay":
+    //   return { ...state, day: action.value };
 
     case "updateInterview":
 
