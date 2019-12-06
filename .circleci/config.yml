@@ -38,7 +38,7 @@ jobs:
           name: Push Master to Production
           command: |
             git push https://github.com/andyzen619/lighthouse-labs-scheduler.git master:production
-  workflows:
+workflows:
   version: 2
   test_and_deploy:
     jobs:
